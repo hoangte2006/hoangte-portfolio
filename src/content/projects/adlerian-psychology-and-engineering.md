@@ -5,7 +5,7 @@ pubDate: 2024-06-25
 period: 'Q2 2024'
 category: 'Learning Log'
 tags: ['Reflection', 'Psychology', 'Personal Growth', 'Adler']
-heroImage: '../../assets\water-fight\wf.png'
+heroImage: '../../assets/water-fight/wf.png'
 outcome: "Learned to apply the 'Separation of Tasks' principle from Adlerian psychology to reduce frustration and increase effectiveness in both personal challenges and technical debugging."
 youtube:
   - 'https://www.youtube.com/watch?v=gcE0cWMUZYA'
