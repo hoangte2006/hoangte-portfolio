@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 
+const { BASE_URL } = import.meta.env;
+
 interface Props {
 	title: string;
 	description: string;
@@ -15,7 +17,7 @@ const { title, description } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href={`${BASE_URL}favicon.svg`} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
@@ -23,12 +25,12 @@ const { title, description } = Astro.props;
 		<!-- Header -->
 		<header class="bg-slate-950/80 backdrop-blur-sm sticky top-0 z-50 border-b border-neutral-800">
 			<nav class="container mx-auto flex justify-between items-center p-4">
-				<a href="/" class="text-xl font-bold hover:text-cyan-400 transition-colors">HoangTe</a>
+				<a href={BASE_URL} class="text-xl font-bold hover:text-cyan-400 transition-colors">HoangTe</a>
 				<div class="space-x-4 md:space-x-6 text-neutral-300">
-					<a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
-					<a href="/learning" class="hover:text-cyan-400 transition-colors">Learning</a>
-					<a href="/creative" class="hover:text-cyan-400 transition-colors">Creative</a>
-					<a href="/mentorship" class="hover:text-cyan-400 transition-colors">Mentorship</a>
+					<a href={BASE_URL} class="hover:text-cyan-400 transition-colors">Home</a>
+					<a href={`${BASE_URL}learning`} class="hover:text-cyan-400 transition-colors">Learning</a>
+					<a href={`${BASE_URL}creative`} class="hover:text-cyan-400 transition-colors">Creative</a>
+					<a href={`${BASE_URL}mentorship`} class="hover:text-cyan-400 transition-colors">Mentorship</a>
 				</div>
 			</nav>
 		</header>
