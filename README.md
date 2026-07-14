@@ -1,45 +1,45 @@
-# Astro Starter Kit: Blog :)
+# Hoang Te's Portfolio
 
-```sh
-npm create astro@latest -- --template blog
-```
+This repository contains the source code for my personal portfolio website, built with [Astro](https://astro.build/) and deployed on [GitHub Pages](https://pages.github.com/).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The live site can be viewed at: **[https://hoangte2006.github.io/hoangte-portfolio/](https://hoangte2006.github.io/hoangte-portfolio/)**
 
-Features:
+## ✨ Features
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+-   **Content-Driven:** All projects and learning logs are managed as simple Markdown files in `src/content/`.
+-   **Fully Responsive:** Designed to look great on all devices, from mobile phones to desktops.
+-   **Automatic Deployment:** Every push to the `main` branch automatically triggers a new build and deployment via GitHub Actions.
+-   **Organized Sections:**
+    -   **Learning:** Showcases completed projects and a "Learning Log" of reflections and technical notes.
+    -   **Creative:** A gallery of personal DIY and embedded systems projects.
+    -   **Mentorship:** Details on my experience teaching and mentoring in Chess and Scratch.
 
-## 🚀 Project Structure
+## 🚀 Tech Stack
 
-Inside of your Astro project, you'll see the following folders and files:
+-   **Framework:** Astro
+-   **Styling:** Tailwind CSS
+-   **Deployment:** GitHub Pages & GitHub Actions
 
-```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
-```
+## 💻 Local Development
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+To run this project locally, follow these steps:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/hoangte2006/hoangte-portfolio.git
+    cd hoangte-portfolio
+    ```
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-Any static assets, like images, can be placed in the `public/` directory.
+3.  **Start the development server:**
+    ```bash
+    npm run dev
+    ```
+    The local site will be available at `http://localhost:4321`.
 
 ## 🧞 Commands
 

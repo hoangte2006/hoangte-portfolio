@@ -24,6 +24,16 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+      - name: Verify Base Path in Build Output
+        run: |
+          echo "--- Checking for base path in dist/index.html ---"
+          if grep -q 'href="/hoangte-portfolio/' dist/index.html; then
+            echo "SUCCESS: Base path found in href links."
+          else
+            echo "ERROR: Base path '/hoangte-portfolio/' NOT found in href links. The build did not apply the base path correctly."
+            cat dist/index.html
+            exit 1
+          fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
