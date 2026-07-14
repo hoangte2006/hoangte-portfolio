@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Sample data for "Latest Activity"
+const latestActivity = [
+  {
+    title: 'Digital Motorcycle Tachometer (RPM Display System)',
+    description: 'Developed a real-time RPM monitoring system for motorcycles, optimized for precise signal acquisition and long-term circuit reliability.',
+    href: '/projects/rpm-meter',
+    category: 'Project'
+  },
+  {
+    title: 'Learning: Summary of "Thinking, Fast and Slow"',
+    description: 'Core notes from Daniel Kahneman\'s classic book on the two systems of human thought.',
+    href: '/learning/thinking-fast-and-slow',
+    category: 'Learning'
+  },
+  {
+    title: 'Creative: DIY Bluetooth Speaker from PVC Pipe',
+    description: 'Upcycling old materials to create a unique and functional tech product.',
+    href: '/creative/pvc-bluetooth-speaker',
+    category: 'Creative'
+  }
+];
+
+const pageTitle = "Home | YourName";
+const pageDescription = "A personal portfolio showcasing engineering projects, learning notes, and creative endeavors.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+    <!-- Hero Section -->
+    <section class="text-center my-16 md:my-24">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
+            Turning Ideas into Reality.
+        </h1>
+        <p class="text-lg text-neutral-400 max-w-2xl mx-auto">
+            Hi, I'm an engineer who loves to solve problems and build things. This is where I document my journey through hands-on projects, distilled knowledge, and a few "home-brewed" creative works.
+        </p>
+    </section>
+
+    <!-- Latest Activity -->
+    <section>
+        <h2 class="text-3xl font-bold mb-8 border-l-4 border-cyan-400 pl-4">Latest Activity</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {latestActivity.map(item => (
+                <a href={item.href} class="block bg-neutral-800 p-6 rounded-lg hover:ring-2 hover:ring-cyan-400 transition-all duration-300 transform hover:-translate-y-1">
+                    <span class="text-sm font-semibold text-cyan-400">{item.category}</span>
+                    <h3 class="text-xl font-bold mt-2 mb-2 text-neutral-100">{item.title}</h3>
+                    <p class="text-neutral-400">{item.description}</p>
+                </a>
+            ))}
+        </div>
+    </section>
+</BaseLayout>

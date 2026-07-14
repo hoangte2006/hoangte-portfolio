@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Sample data for learning notes
+const notes = [
+  {
+    title: 'Advanced SQL Techniques',
+    description: 'Notes on window functions, CTEs, and performance optimization for complex queries.',
+    tags: ['SQL', 'Database', 'Data Engineering'],
+    href: '/learning/advanced-sql'
+  },
+  {
+    title: 'The Psychology of Money',
+    description: 'Key takeaways from Morgan Housel\'s book on wealth, greed, and happiness.',
+    tags: ['Book Summary', 'Finance', 'Psychology'],
+    href: '/learning/psychology-of-money'
+  },
+  {
+    title: 'Rust Ownership Model',
+    description: 'A deep dive into Rust\'s core concepts of ownership, borrowing, and lifetimes.',
+    tags: ['Rust', 'Programming', 'Systems'],
+    href: '/learning/rust-ownership'
+  },
+  {
+    title: 'Effective Team Collaboration',
+    description: 'Strategies for communication, conflict resolution, and achieving shared goals in a technical team.',
+    tags: ['Soft Skills', 'Teamwork', 'Productivity'],
+    href: '/learning/team-collaboration'
+  },
+  {
+    title: 'Introduction to Docker and Containers',
+    description: 'Fundamentals of containerization, Dockerfiles, and managing images and containers.',
+    tags: ['Docker', 'DevOps', 'Infrastructure'],
+    href: '/learning/intro-to-docker'
+  },
+  {
+    title: 'English Vocabulary for Tech',
+    description: 'A curated list of essential English terms for software development and IT.',
+    tags: ['English', 'Vocabulary', 'Career'],
+    href: '/learning/tech-english'
+  }
+];
+
+const pageTitle = "Learning | YourName";
+const pageDescription = "A collection of study notes, book summaries, and technical documentation.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+    <section class="mb-16">
+        <h1 class="text-4xl font-bold mb-2">Learning Corner</h1>
+        <p class="text-neutral-400">A curated collection of my study notes, technical documentation, and book summaries.</p>
+    </section>
+
+    <section>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {notes.map(note => (
+                <a href={note.href} class="flex flex-col justify-between bg-neutral-800 p-6 rounded-lg hover:ring-2 hover:ring-cyan-400 transition-all duration-300 transform hover:-translate-y-1">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-neutral-100">{note.title}</h3>
+                        <p class="text-neutral-400 mb-4">{note.description}</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        {note.tags.map(tag => (
+                            <span class="text-xs font-medium bg-neutral-700 text-cyan-400 px-2 py-1 rounded-full">{tag}</span>
+                        ))}
+                    </div>
+                </a>
+            ))}
+        </div>
+    </section>
+</BaseLayout>

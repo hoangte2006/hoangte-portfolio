@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+// 1. Fetch all relevant content for this page
+const allLearningContent = await getCollection('projects', ({ data }) => {
+	return data.category === 'Learning' || data.category === 'Learning Log';
+});
+
+// 2. Separate into two distinct lists
+const learningProjects = allLearningContent
+    .filter(item => item.data.category === 'Learning')
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const learningLogs = allLearningContent
+    .filter(item => item.data.category === 'Learning Log')
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const pageTitle = "Learning | YourName";
+const pageDescription = "A collection of completed projects, study notes, and reflections on my learning journey.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+    <!-- Section 1: Projects (The Showcase) -->
+    <section class="mb-20">
+        <div class="mb-10 rounded-3xl border border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-900 to-slate-950 p-6 md:p-8 shadow-2xl shadow-cyan-950/10">
+            <p class="mb-3 text-sm uppercase tracking-[0.28em] text-cyan-300/80">The Showcase</p>
+            <h1 class="mb-3 text-4xl font-bold md:text-5xl bg-gradient-to-r from-cyan-300 via-white to-blue-300 bg-clip-text text-transparent">Completed Projects</h1>
+            <p class="max-w-3xl text-neutral-300">Polished projects that demonstrate the application of learned concepts.</p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+            {learningProjects.map(project => (
+                <a href={`/projects/${project.slug}`} class="group overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/80 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-950/20">
+                    {project.data.heroImage && (
+                        <Image src={project.data.heroImage} alt={project.data.title} class="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
+                    )}
+                    <div class="p-6">
+                        <h3 class="mb-2 text-xl font-bold text-neutral-100">{project.data.title}</h3>
+                        <p class="mb-4 text-neutral-400">{project.data.description}</p>
+                        <div class="flex flex-wrap gap-2">
+                            {project.data.tags.map(tag => (
+                                <span class="rounded-full bg-neutral-800 px-2.5 py-1 text-xs font-medium text-cyan-300">{tag}</span>
+                            ))}
+                        </div>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </section>
+
+    <!-- Section 2: Learning Log (The Journey) -->
+    <section>
+        <div class="mb-10 rounded-3xl border border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-900 to-slate-950 p-6 md:p-8 shadow-2xl shadow-amber-950/10">
+            <p class="mb-3 text-sm uppercase tracking-[0.28em] text-amber-300/80">The Journey</p>
+            <h2 class="mb-3 text-4xl font-bold md:text-5xl bg-gradient-to-r from-amber-300 via-white to-orange-300 bg-clip-text text-transparent">Learning Log</h2>
+            <p class="max-w-3xl text-neutral-300">A collection of notes, reflections, and bugs encountered along the way. This is where the real learning happens.</p>
+        </div>
+
+        <div class="space-y-6">
+            {learningLogs.map(log => (
+                <a href={`/projects/${log.slug}`} class="group block rounded-3xl border border-neutral-800 bg-neutral-900/80 p-6 transition-all duration-300 hover:border-amber-400/40 hover:bg-neutral-900">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                        <h3 class="mb-2 text-xl font-bold text-neutral-100 group-hover:text-amber-300 sm:mb-0">{log.data.title}</h3>
+                        <p class="flex-shrink-0 text-sm text-neutral-500">{log.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    </div>
+                    <p class="mt-2 text-neutral-400">{log.data.description}</p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        {log.data.tags.map(tag => (
+                            <span class="rounded-full bg-neutral-800 px-2.5 py-1 text-xs font-medium text-amber-300">{tag}</span>
+                        ))}
+                    </div>
+                </a>
+            ))}
+        </div>
+    </section>
+</BaseLayout>

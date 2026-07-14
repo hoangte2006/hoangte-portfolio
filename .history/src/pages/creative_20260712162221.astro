@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const creativeProjects = await getCollection('projects', ({ data }) => {
+	return data.category === 'Creative';  
+});
+
+const projects = creativeProjects.map((project) => ({
+	...project.data,
+	href: `/projects/${project.slug}`,
+	image: project.data.heroImage,
+	tech: project.data.tags,
+}));
+
+const pageTitle = "Creative Sandbox | YourName";
+const pageDescription = "A gallery of creative projects, DIY builds, and hands-on experiments.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <section class="mb-10 rounded-3xl border border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-900 to-slate-950 p-6 md:p-8 shadow-2xl shadow-cyan-950/10">
+    <p class="mb-3 text-sm uppercase tracking-[0.28em] text-cyan-300/80">Creative Sandbox</p>
+    <h1 class="mb-3 text-4xl font-bold md:text-5xl bg-gradient-to-r from-cyan-300 via-white to-blue-300 bg-clip-text text-transparent">Hands-on builds and experiments</h1>
+    <p class="max-w-3xl text-neutral-300">A small set of real builds and experiments. RPM is the featured piece here right now.</p>
+  </section>
+
+  <section>
+    <div class="grid grid-cols-1 gap-8">
+      {projects.map(project => (
+        <a href={project.href} class="group overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/80 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-950/20 md:grid md:grid-cols-[360px_minmax(0,1fr)]">
+          <Image src={project.image} alt={project.title} class="h-60 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02] md:h-full" />
+          <div class="p-6">
+            <div class="mb-3 inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">Featured</div>
+            <h3 class="mb-2 text-xl font-bold text-neutral-100">{project.title}</h3>
+            <p class="mb-4 text-neutral-400">{project.description}</p>
+            <div class="flex flex-wrap gap-2">
+              {project.tech.map(tag => (
+                <span class="rounded-full bg-neutral-800 px-2.5 py-1 text-xs font-medium text-cyan-300">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+    <p class="mt-6 text-sm text-neutral-500">More creative posts can be added here later.</p>
+  </section>
+</BaseLayout>

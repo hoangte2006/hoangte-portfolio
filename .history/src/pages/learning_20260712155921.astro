@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+const learningProjects = await getCollection('projects', ({ data }) => {
+	return data.category === 'Learning';
+});
+
+const notes = learningProjects.map((project) => ({
+	...project.data,
+	href: `/projects/${project.slug}`,
+	image: project.data.heroImage,
+}));
+
+const pageTitle = "Learning | YourName";
+const pageDescription = "A collection of study notes, book summaries, and technical documentation.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+    <section class="mb-16">
+        <h1 class="text-4xl font-bold mb-2">Learning Corner</h1>
+        <p class="text-neutral-400">A focused collection of study notes and course-based projects.</p>
+    </section>
+
+    <section>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
+            {notes.map(note => (
+                <a href={note.href} class="group overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/80 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-950/20">
+                    {note.image && (
+                        <Image src={note.image} alt={note.title} class="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
+                    )}
+                    <div class="p-6">
+                        <h3 class="mb-2 text-xl font-bold text-neutral-100">{note.title}</h3>
+                        <p class="mb-4 text-neutral-400">{note.description}</p>
+                        <div class="flex flex-wrap gap-2">
+                            {note.tags.map(tag => (
+                                <span class="rounded-full bg-neutral-800 px-2 py-1 text-xs font-medium text-cyan-300">{tag}</span>
+                            ))}
+                        </div>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </section>
+</BaseLayout>

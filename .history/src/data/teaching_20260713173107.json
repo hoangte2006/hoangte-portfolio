@@ -1,0 +1,20 @@
+{
+	"teaching_logs": [
+		{
+			"subject": "Chess Mentorship",
+			"total_sessions": 32,
+			"category": "Long-term Mentorship",
+			"format": "Online 1:1",
+			"student_profile": "8-year-old beginner",
+			"skills_developed": ["Critical Thinking", "Pattern Recognition", "Strategic Planning"],
+			"mentorship_reflection": "Over the course of 32 sessions, I guided the student through structured chess concepts. The focus was on building a logical foundation, improving tactical vision, and cultivating patience. The student showed consistent growth in analyzing board positions and making calculated decisions."
+		},
+		{
+			"subject": "Web Dev Bootcamp",
+			"total_sessions": 12,
+			"category": "Bootcamp",
+			"skills_developed": ["Frontend Development", "Problem Solving", "Git", "React Basics"],
+			"mentorship_reflection": "Led a 12-session bootcamp for beginners. We covered web fundamentals and built a small project. The goal was to build confidence and provide a clear path for further learning."
+		}
+	]
+}

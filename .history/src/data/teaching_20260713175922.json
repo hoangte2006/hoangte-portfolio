@@ -1,0 +1,28 @@
+{
+	"teaching_logs": [
+		{
+			"subject": "Chess Mentorship",
+			"total_sessions": 32,
+			"category": "Long-term Mentorship",
+			"format": "Online 1:1",
+			"student_profile": "8-year-old beginner",
+			"period": "May 29 - Dec 13, 2025",
+			"image": "//Teach/Chess.png",
+			"onboarding_story": "Before starting our mentorship, the family required a demonstration match with the father to assess my tactical approach. Securing a win not only built trust but also established the foundation for our 32-session learning journey.",
+			"demo_game_url": "https://lichess.org/eLM8zfDJ",
+			"skills_developed": ["Critical Thinking", "Pattern Recognition", "Strategic Planning"],
+			"mentorship_reflection": "Over the course of 32 sessions, I guided the student through structured chess concepts. The focus was on building a logical foundation, improving tactical vision, and cultivating patience. The student showed consistent growth in analyzing board positions and making calculated decisions."
+		},
+        
+        {
+            "category": "Long-term Mentorship",
+            "subject": "Scratch Game Development",
+            "total_sessions": 50,
+            "skills_developed": ["Event-driven Programming", "Coordinate Systems", "Game Physics", "Debugging & Logic"],
+            "mentorship_reflection": "Mentored student to build and deploy multiple functional game projects, including physics-based games and shooter mechanics.",
+            "reflection": "Guided student from fundamental block-based programming to complex game architecture. Fostered strong independent problem-solving and logical debugging skills throughout the 50+ sessions."
+        }
+	]
+
+
+}

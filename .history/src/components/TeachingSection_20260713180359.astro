@@ -1,0 +1,193 @@
+---
+import teachingData from '../data/teaching.json';
+
+// 1. Define the TypeScript interface for type safety
+export interface TeachingLog {
+  subject: string;
+  total_sessions: number;
+  category: 'Long-term Mentorship' | 'Bootcamp';
+  skills_developed: string[];
+  mentorship_reflection: string;
+  format?: string;
+  student_profile?: string;
+  period?: string;
+  image?: string;
+  images?: string[];
+  onboarding_story?: string;
+  demo_game_url?: string;
+}
+
+const { teaching_logs }: { teaching_logs: TeachingLog[] } = teachingData;
+---
+
+<section class="space-y-8">
+  <!-- 2. Loop through the data and render cards in a responsive grid -->
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+    {teaching_logs.map((log) => (
+      <div class="flex h-full flex-col rounded-3xl border border-neutral-800 bg-neutral-900/80 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-950/20">
+        <div class="flex-grow">
+          <div class="mb-4 flex flex-wrap items-center justify-between gap-y-2">
+            <!-- 3. Category badge with conditional colors -->
+            <span
+              class:list={[
+                'rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em]',
+                {
+                  'bg-sky-400/10 text-sky-300 border border-sky-400/20': log.category === 'Long-term Mentorship',
+                  'bg-amber-400/10 text-amber-300 border border-amber-400/20': log.category === 'Bootcamp',
+                }
+              ]}
+            >
+              {log.category}
+            </span>
+            <div class="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 text-right text-sm text-neutral-400">
+              {log.period && (
+                <span class="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5 h-4 w-4 text-neutral-500"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+                  {log.period}
+                </span>
+              )}
+              {log.format && <span class="flex items-center">{log.format}</span>}
+              <span class="flex items-center">{log.total_sessions} Sessions</span>
+            </div>
+          </div>
+          <h3 class="mb-3 text-xl font-bold text-neutral-100">{log.subject}</h3>
+          {log.student_profile && <p class="mb-2 text-sm font-medium text-sky-300">{log.student_profile}</p>}
+
+          {log.image && <img src={log.image} alt={`${log.subject} highlight`} class="my-5 w-full rounded-2xl border border-neutral-800 object-cover" />}
+          {log.images && log.images.length > 0 && (
+            <div class="image-carousel my-5" data-carousel>
+              <div class="relative overflow-hidden rounded-2xl border border-neutral-800">
+                <div class="carousel-slides flex transition-transform duration-500 ease-in-out" data-carousel-slides>
+                  {log.images.map((imgSrc, index) => (
+                    <div class="carousel-slide min-w-full">
+                      <img src={imgSrc} alt={`${log.subject} highlight ${index + 1}`} class="h-64 w-full cursor-pointer object-cover" data-lightbox-trigger={imgSrc} />
+                    </div>
+                  ))}
+                </div>
+                {log.images.length > 1 && (
+                  <>
+                    <button class="carousel-prev absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition hover:bg-black/75" data-carousel-prev>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    </button>
+                    <button class="carousel-next absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition hover:bg-black/75" data-carousel-next>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
+                    <div class="carousel-dots absolute bottom-2 left-1/2 flex -translate-x-1/2 space-x-2" data-carousel-dots></div>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+
+          {log.onboarding_story && (
+            <blockquote class="mb-5 rounded-r-lg border-l-4 border-sky-400/40 bg-sky-400/5 p-4 text-neutral-300 italic">
+              {log.onboarding_story}
+            </blockquote>
+          )}
+
+          <p class="text-neutral-400">{log.mentorship_reflection}</p>
+        </div>
+
+        <!-- 4. A clean list of skills -->
+        <div class="mt-6 flex-shrink-0">
+          <p class="mb-3 text-sm font-semibold text-neutral-300">Skills Developed</p>
+          <div class="flex flex-wrap gap-2">
+            {log.skills_developed.map(skill => (
+              <span class="rounded-full bg-neutral-800 px-2.5 py-1 text-xs font-medium text-cyan-300">{skill}</span>
+            ))}
+          </div>
+
+          {log.demo_game_url && (
+            <div class="mt-6 border-t border-neutral-800 pt-6">
+              <a href={log.demo_game_url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-lg bg-neutral-800 px-4 py-2 text-sm font-semibold text-sky-300 transition hover:bg-neutral-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right">
+                  <path d="M7 7h10v10"></path><path d="M7 17 17 7"></path>
+                </svg>
+                View Demo Match on Lichess
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- Lightbox Structure (shared for all images) -->
+<div id="lightbox" class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/80 backdrop-blur-sm">
+  <button id="lightbox-close" class="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
+  <img id="lightbox-image" src="" alt="Enlarged view" class="max-h-[90vh] max-w-[90vw] rounded-lg" />
+</div>
+
+<script>
+  // --- Carousel Logic ---
+  document.querySelectorAll('[data-carousel]').forEach(carousel => {
+    const slidesContainer = carousel.querySelector('[data-carousel-slides]') as HTMLElement;
+    const prevButton = carousel.querySelector('[data-carousel-prev]') as HTMLButtonElement;
+    const nextButton = carousel.querySelector('[data-carousel-next]') as HTMLButtonElement;
+    const dotsContainer = carousel.querySelector('[data-carousel-dots]') as HTMLElement;
+    const slides = Array.from(slidesContainer.children);
+    const slideCount = slides.length;
+    let currentIndex = 0;
+
+    if (slideCount <= 1) return;
+
+    // Create dots
+    for (let i = 0; i < slideCount; i++) {
+      const dot = document.createElement('button');
+      dot.classList.add('h-2', 'w-2', 'rounded-full', 'bg-white/50', 'transition', 'hover:bg-white');
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+    const dots = Array.from(dotsContainer.children);
+
+    function updateCarousel() {
+      slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('bg-white', index === currentIndex);
+        dot.classList.toggle('bg-white/50', index !== currentIndex);
+      });
+    }
+
+    function goToSlide(index: number) {
+      currentIndex = (index + slideCount) % slideCount;
+      updateCarousel();
+    }
+
+    prevButton.addEventListener('click', () => goToSlide(currentIndex - 1));
+    nextButton.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+    updateCarousel(); // Initial setup
+  });
+
+  // --- Lightbox Logic ---
+  const lightbox = document.getElementById('lightbox') as HTMLElement;
+  const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement;
+  const lightboxClose = document.getElementById('lightbox-close') as HTMLButtonElement;
+
+  document.querySelectorAll('[data-lightbox-trigger]').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const imgSrc = trigger.getAttribute('data-lightbox-trigger');
+      if (imgSrc) {
+        lightboxImage.src = imgSrc;
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+      }
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    lightboxImage.src = ''; // Clear src
+  }
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) { // Close only if clicking on the background
+      closeLightbox();
+    }
+  });
+</script>

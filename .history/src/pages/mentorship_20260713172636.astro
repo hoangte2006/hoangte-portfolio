@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TeachingSection from '../components/TeachingSection.astro';
+
+const pageTitle = "Mentorship | YourName";
+const pageDescription = "A summary of my teaching and mentorship experiences, from long-term guidance to focused bootcamps.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <section class="mb-10 rounded-3xl border border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-900 to-slate-950 p-6 md:p-8 shadow-2xl shadow-cyan-950/10">
+    <p class="mb-3 text-sm uppercase tracking-[0.28em] text-cyan-300/80">Guidance & Knowledge Sharing</p>
+    <h1 class="mb-3 text-4xl font-bold md:text-5xl bg-gradient-to-r from-cyan-300 via-white to-blue-300 bg-clip-text text-transparent">Teaching & Mentorship</h1>
+    <p class="max-w-3xl text-neutral-300">Sharing knowledge is a core part of my growth. Here's a log of my mentorship activities.</p>
+  </section>
+
+  <TeachingSection />
+</BaseLayout>

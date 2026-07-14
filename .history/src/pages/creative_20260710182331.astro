@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Sample data for creative projects
+const projects = [
+  {
+    title: 'Recycled E-Waste Robot',
+    description: 'A small, animated robot built entirely from discarded electronic components.',
+    tech: ['Arduino', 'Soldering', 'Upcycling'],
+    imageUrl: 'https://via.placeholder.com/400x225/171717/454545?text=E-Waste+Robot',
+    href: '/creative/ewaste-robot'
+  },
+  {
+    title: 'Kinetic Sand Art Table',
+    description: 'A CNC-controlled table that draws intricate patterns in a bed of sand.',
+    tech: ['CNC', '3D Printing', 'Firmware'],
+    imageUrl: 'https://via.placeholder.com/400x225/171717/454545?text=Sand+Table',
+    href: '/creative/sand-art-table'
+  },
+  {
+    title: 'Automated Hydroponics System',
+    description: 'A self-watering and nutrient-managing system for growing herbs indoors, built with ESP32.',
+    tech: ['ESP32', 'IoT', 'Sensors', 'DIY'],
+    imageUrl: 'https://via.placeholder.com/400x225/171717/454545?text=Hydroponics',
+    href: '/creative/hydroponics'
+  },
+  {
+    title: 'LED Matrix Word Clock',
+    description: 'A custom-built clock that displays the time in words instead of numbers.',
+    tech: ['Electronics', 'C++', 'LED Matrix'],
+    imageUrl: 'https://via.placeholder.com/400x225/171717/454545?text=Word+Clock',
+    href: '/creative/word-clock'
+  },
+];
+
+const pageTitle = "Creative Sandbox | YourName";
+const pageDescription = "A gallery of creative projects, DIY builds, and hands-on experiments.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+    <section class="mb-16">
+        <h1 class="text-4xl font-bold mb-2">Creative Sandbox</h1>
+        <p class="text-neutral-400">A gallery of my DIY projects, hands-on experiments, and things built for fun.</p>
+    </section>
+
+    <section>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+            {projects.map(project => (
+                <a href={project.href} class="group block bg-neutral-800 rounded-lg overflow-hidden transition-all duration-300 hover:ring-2 hover:ring-cyan-400">
+                    <img src={project.imageUrl} alt={project.title} class="w-full h-48 object-cover group-hover:opacity-90 transition-opacity" />
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-neutral-100">{project.title}</h3>
+                        <p class="text-neutral-400 mb-4">{project.description}</p>
+                        <div class="flex flex-wrap gap-2">
+                            {project.tech.map(tag => (
+                                <span class="text-xs font-medium bg-neutral-700 text-cyan-400 px-2 py-1 rounded-full">{tag}</span>
+                            ))}
+                        </div>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </section>
+</BaseLayout>

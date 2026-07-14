@@ -1,0 +1,117 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RpmHero from '../../assets/RPM.jpg';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+	return projects.map((project) => ({
+		params: { slug: project.slug },
+		props: project,
+	}));
+}
+type Props = CollectionEntry<'projects'>;
+
+const project = Astro.props;
+const { Content } = await project.render();
+
+const isRpmProject = project.slug === 'rpm-meter';
+
+const rpmVideos = [
+	'https://www.youtube.com/watch?v=fnMK_4SRYB4&list=PLPGzYWS3E4fg&index=1',
+	'https://www.youtube.com/watch?v=liEPrdCWsI8&list=PLPGzYWS3E4fg&index=2',
+];
+
+const getYouTubeEmbedUrl = (url: string) => {
+	const parsedUrl = new URL(url);
+	const videoId = parsedUrl.searchParams.get('v') ?? parsedUrl.pathname.split('/').filter(Boolean).pop();
+
+	return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+};
+
+const youtubeVideos = (project.data.youtube?.length ? project.data.youtube : isRpmProject ? rpmVideos : []).map((url) => ({
+	url,
+	embedUrl: getYouTubeEmbedUrl(url),
+})) ?? [];
+
+const heroImage = project.data.heroImage ?? (isRpmProject ? RpmHero : undefined);
+---
+
+<BaseLayout title={project.data.title} description={project.data.description}>
+	<article class="space-y-10">
+		<header class="rounded-3xl border border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-900 to-slate-950 p-6 md:p-8 shadow-2xl shadow-cyan-950/20">
+			<div class="mb-4 flex flex-wrap items-center gap-3 text-sm text-neutral-300">
+				<span class="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-cyan-300">Project</span>
+				<span class="rounded-full border border-neutral-700 bg-neutral-800/70 px-3 py-1">{project.data.period}</span>
+			</div>
+			<h1 class="mb-4 bg-gradient-to-r from-cyan-300 via-white to-blue-300 bg-clip-text text-4xl font-bold tracking-tight text-transparent md:text-6xl">
+				{project.data.title}
+			</h1>
+			<p class="max-w-3xl text-lg leading-relaxed text-neutral-300 md:text-xl">
+				{project.data.description}
+			</p>
+		</header>
+
+		{heroImage && (
+			<div class="overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900 shadow-xl shadow-black/30">
+				<Image
+					src={heroImage}
+					alt={`Cover image for ${project.data.title}`}
+					width={1400}
+					height={788}
+					class="h-auto w-full object-cover"
+				/>
+			</div>
+		)}
+
+		<div class="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
+			<div class="prose prose-invert prose-lg max-w-none rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 prose-headings:text-cyan-300 prose-a:text-sky-300 hover:prose-a:text-sky-200 prose-strong:text-neutral-100 prose-blockquote:border-l-cyan-400 prose-blockquote:text-neutral-300 md:p-8">
+				<p class="lead text-xl text-neutral-300">{project.data.description}</p>
+
+				<Content />
+
+				<div class="not-prose mt-10 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-6">
+					<h3 class="mb-3 text-2xl font-bold text-cyan-300">Outcome</h3>
+					<p class="text-lg leading-relaxed text-neutral-200">{project.data.outcome}</p>
+				</div>
+			</div>
+
+			<aside class="space-y-6">
+				<section class="rounded-3xl border border-neutral-800 bg-neutral-900/80 p-6">
+					<h2 class="mb-3 text-xl font-semibold text-neutral-100">At a glance</h2>
+					<p class="leading-relaxed text-neutral-300">Real-time engine RPM monitoring with isolated pickup signal acquisition, noise filtering, and Arduino-based display output.</p>
+				</section>
+
+				{youtubeVideos.length > 0 && (
+					<section class="space-y-4 rounded-3xl border border-neutral-800 bg-neutral-900/80 p-6">
+						<div>
+							<h2 class="text-xl font-semibold text-neutral-100">Demo videos</h2>
+							<p class="mt-1 text-sm text-neutral-400">Embedded so the clips can play directly on the page.</p>
+						</div>
+						<div class="space-y-4">
+							{youtubeVideos.map((video, index) => (
+								<div class="overflow-hidden rounded-2xl border border-neutral-800 bg-black">
+									<div class="aspect-video">
+										<iframe
+											src={video.embedUrl}
+											title={`RPM demo video ${index + 1}`}
+											class="h-full w-full"
+											loading="lazy"
+											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+											allowfullscreen
+										/>
+									</div>
+									<div class="flex items-center justify-between gap-3 border-t border-neutral-800 px-4 py-3 text-sm text-neutral-300">
+										<span>Video {index + 1}</span>
+										<a href={video.url} target="_blank" rel="noreferrer" class="text-sky-300 transition-colors hover:text-sky-200">Open on YouTube</a>
+									</div>
+								</div>
+							))}
+						</div>
+					</section>
+				)}
+			</aside>
+		</div>
+	</article>
+</BaseLayout>

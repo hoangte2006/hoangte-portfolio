@@ -1,0 +1,79 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RpmHero from '../assets/RPM.jpg';
+
+// Sample data for creative projects
+const projects = [
+  {
+    title: 'Digital Motorcycle Tachometer (RPM Display System)',
+    description: 'Real-time motorcycle RPM monitor with isolated pickup signal acquisition, noise filtering, and a direct on-page video demo.',
+    tech: ['Embedded', 'Arduino', 'Electronics'],
+    image: RpmHero,
+    href: '/projects/rpm-meter'
+  },
+  {
+    title: 'Recycled E-Waste Robot',
+    description: 'A small, animated robot built entirely from discarded electronic components.',
+    tech: ['Arduino', 'Soldering', 'Upcycling'],
+    imageUrl: 'https://via.placeholder.com/400x225/171717/454545?text=E-Waste+Robot',
+    href: '/creative/ewaste-robot'
+  },
+  {
+    title: 'Kinetic Sand Art Table',
+    description: 'A CNC-controlled table that draws intricate patterns in a bed of sand.',
+    tech: ['CNC', '3D Printing', 'Firmware'],
+    imageUrl: 'https://via.placeholder.com/400x225/171717/454545?text=Sand+Table',
+    href: '/creative/sand-art-table'
+  },
+  {
+    title: 'Automated Hydroponics System',
+    description: 'A self-watering and nutrient-managing system for growing herbs indoors, built with ESP32.',
+    tech: ['ESP32', 'IoT', 'Sensors', 'DIY'],
+    imageUrl: 'https://via.placeholder.com/400x225/171717/454545?text=Hydroponics',
+    href: '/creative/hydroponics'
+  },
+  {
+    title: 'LED Matrix Word Clock',
+    description: 'A custom-built clock that displays the time in words instead of numbers.',
+    tech: ['Electronics', 'C++', 'LED Matrix'],
+    imageUrl: 'https://via.placeholder.com/400x225/171717/454545?text=Word+Clock',
+    href: '/creative/word-clock'
+  },
+];
+
+const pageTitle = "Creative Sandbox | YourName";
+const pageDescription = "A gallery of creative projects, DIY builds, and hands-on experiments.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <section class="mb-10 rounded-3xl border border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-900 to-slate-950 p-6 md:p-8 shadow-2xl shadow-cyan-950/10">
+    <p class="mb-3 text-sm uppercase tracking-[0.28em] text-cyan-300/80">Creative Sandbox</p>
+    <h1 class="mb-3 text-4xl font-bold md:text-5xl bg-gradient-to-r from-cyan-300 via-white to-blue-300 bg-clip-text text-transparent">Hands-on builds and experiments</h1>
+    <p class="max-w-3xl text-neutral-300">A gallery of things I build for fun, plus the RPM project that now lives here too so it is easier to find from the Creative section.</p>
+  </section>
+
+  <section>
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-2">
+      {projects.map(project => (
+        <a href={project.href} class="group overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/80 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-950/20">
+          {"image" in project ? (
+            <Image src={project.image} alt={project.title} class="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
+          ) : (
+            <img src={project.imageUrl} alt={project.title} class="h-52 w-full object-cover transition-opacity duration-300 group-hover:opacity-95" />
+          )}
+          <div class="p-6">
+            <div class="mb-3 inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">{project.href === '/projects/rpm-meter' ? 'Featured' : 'Creative'}</div>
+            <h3 class="mb-2 text-xl font-bold text-neutral-100">{project.title}</h3>
+            <p class="mb-4 text-neutral-400">{project.description}</p>
+            <div class="flex flex-wrap gap-2">
+              {project.tech.map(tag => (
+                <span class="rounded-full bg-neutral-800 px-2.5 py-1 text-xs font-medium text-cyan-300">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

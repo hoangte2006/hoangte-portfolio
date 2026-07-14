@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import LibraryHero from '../assets/LB1.png';
+
+// Sample data for learning notes
+const notes = [
+  {
+    title: 'Data Structures Project: Library Management System',
+    description: 'A C++ project where I practiced pointers, memory management, queues, and tree-based algorithms while learning the course by building.',
+    tags: ['C++', 'Data Structures', 'Algorithms'],
+    href: '/projects/library-project',
+    image: LibraryHero,
+  },
+  {
+    title: 'Advanced SQL Techniques',
+    description: 'Notes on window functions, CTEs, and performance optimization for complex queries.',
+    tags: ['SQL', 'Database', 'Data Engineering'],
+    href: '/learning/advanced-sql'
+  },
+  {
+    title: 'The Psychology of Money',
+    description: 'Key takeaways from Morgan Housel\'s book on wealth, greed, and happiness.',
+    tags: ['Book Summary', 'Finance', 'Psychology'],
+    href: '/learning/psychology-of-money'
+  },
+  {
+    title: 'Rust Ownership Model',
+    description: 'A deep dive into Rust\'s core concepts of ownership, borrowing, and lifetimes.',
+    tags: ['Rust', 'Programming', 'Systems'],
+    href: '/learning/rust-ownership'
+  },
+  {
+    title: 'Effective Team Collaboration',
+    description: 'Strategies for communication, conflict resolution, and achieving shared goals in a technical team.',
+    tags: ['Soft Skills', 'Teamwork', 'Productivity'],
+    href: '/learning/team-collaboration'
+  },
+  {
+    title: 'Introduction to Docker and Containers',
+    description: 'Fundamentals of containerization, Dockerfiles, and managing images and containers.',
+    tags: ['Docker', 'DevOps', 'Infrastructure'],
+    href: '/learning/intro-to-docker'
+  },
+  {
+    title: 'English Vocabulary for Tech',
+    description: 'A curated list of essential English terms for software development and IT.',
+    tags: ['English', 'Vocabulary', 'Career'],
+    href: '/learning/tech-english'
+  }
+];
+
+const pageTitle = "Learning | YourName";
+const pageDescription = "A collection of study notes, book summaries, and technical documentation.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+    <section class="mb-16">
+        <h1 class="text-4xl font-bold mb-2">Learning Corner</h1>
+        <p class="text-neutral-400">A curated collection of my study notes, technical documentation, and book summaries.</p>
+    </section>
+
+    <section>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {notes.map(note => (
+          <a href={note.href} class="group overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/80 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-950/20">
+            {'image' in note && note.image && (
+              <Image src={note.image} alt={note.title} class="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
+            )}
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2 text-neutral-100">{note.title}</h3>
+              <p class="text-neutral-400 mb-4">{note.description}</p>
+              <div class="flex flex-wrap gap-2 mt-auto">
+                {note.tags.map(tag => (
+                  <span class="text-xs font-medium bg-neutral-800 text-cyan-300 px-2 py-1 rounded-full">{tag}</span>
+                ))}
+              </div>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </section>
+</BaseLayout>

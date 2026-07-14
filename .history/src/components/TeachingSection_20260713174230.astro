@@ -1,0 +1,82 @@
+---
+import teachingData from '../data/teaching.json';
+
+// 1. Define the TypeScript interface for type safety
+export interface TeachingLog {
+  subject: string;
+  total_sessions: number;
+  category: 'Long-term Mentorship' | 'Bootcamp';
+  skills_developed: string[];
+  mentorship_reflection: string;
+  format?: string;
+  student_profile?: string;
+  image?: string;
+  onboarding_story?: string;
+  demo_game_url?: string;
+}
+
+const { teaching_logs }: { teaching_logs: TeachingLog[] } = teachingData;
+---
+
+<section class="space-y-8">
+  <!-- 2. Loop through the data and render cards in a responsive grid -->
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+    {teaching_logs.map((log) => (
+      <div class="flex h-full flex-col rounded-3xl border border-neutral-800 bg-neutral-900/80 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-2xl hover:shadow-cyan-950/20">
+        <div class="flex-grow">
+          <div class="mb-4 flex flex-wrap items-center justify-between gap-y-2">
+            <!-- 3. Category badge with conditional colors -->
+            <span
+              class:list={[
+                'rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em]',
+                {
+                  'bg-sky-400/10 text-sky-300 border border-sky-400/20': log.category === 'Long-term Mentorship',
+                  'bg-amber-400/10 text-amber-300 border border-amber-400/20': log.category === 'Bootcamp',
+                }
+              ]}
+            >
+              {log.category}
+            </span>
+            <div class="flex items-center gap-x-3 text-right text-sm text-neutral-400">
+              {log.format && <span>{log.format}</span>}
+              <span>{log.total_sessions} Sessions</span>
+            </div>
+          </div>
+          <h3 class="mb-3 text-xl font-bold text-neutral-100">{log.subject}</h3>
+          {log.student_profile && <p class="mb-2 text-sm font-medium text-sky-300">{log.student_profile}</p>}
+
+          {log.image && <img src={log.image} alt={`${log.subject} highlight`} class="my-5 w-full rounded-2xl border border-neutral-800 object-cover" />}
+
+          {log.onboarding_story && (
+            <blockquote class="mb-5 rounded-r-lg border-l-4 border-sky-400/40 bg-sky-400/5 p-4 text-neutral-300 italic">
+              {log.onboarding_story}
+            </blockquote>
+          )}
+
+          <p class="text-neutral-400">{log.mentorship_reflection}</p>
+        </div>
+
+        <!-- 4. A clean list of skills -->
+        <div class="mt-6 flex-shrink-0">
+          <p class="mb-3 text-sm font-semibold text-neutral-300">Skills Developed</p>
+          <div class="flex flex-wrap gap-2">
+            {log.skills_developed.map(skill => (
+              <span class="rounded-full bg-neutral-800 px-2.5 py-1 text-xs font-medium text-cyan-300">{skill}</span>
+            ))}
+          </div>
+
+          {log.demo_game_url && (
+            <div class="mt-6 border-t border-neutral-800 pt-6">
+              <a href={log.demo_game_url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-lg bg-neutral-800 px-4 py-2 text-sm font-semibold text-sky-300 transition hover:bg-neutral-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right">
+                  <path d="M7 7h10v10"></path><path d="M7 17 17 7"></path>
+                </svg>
+                View Demo Match on Lichess
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
