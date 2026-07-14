@@ -1,26 +1,38 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Chạy quy trình này mỗi khi bạn push code lên nhánh `main`
   push:
-    branches:
-      - main
+    branches: ["main"]
 
-  # Cho phép bạn chạy quy trình này thủ công từ tab Actions trên GitHub
-  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Astro
-        uses: withastro/action@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          node-version: 18 # Hoặc phiên bản Node.js bạn đang dùng
-          package-manager: npm # Hoặc pnpm, yarn
+          path: "dist"
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy
-        run: npx astro deploy --remote
+        id: deployment
+        uses: actions/deploy-pages@v4
